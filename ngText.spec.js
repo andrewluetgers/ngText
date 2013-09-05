@@ -1,5 +1,5 @@
 // uses https://github.com/andrewluetgers/ngTest
-ngTest({"common - ngText: A util for centralizing UI strings": [
+ngTest({"ngText: A service for centralizing UI strings and supporting multiple languages": [
 	"ngText:",
 		"ngTextConfig",
 		"$T",
