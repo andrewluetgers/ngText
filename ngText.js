@@ -64,7 +64,6 @@ angular.module("ngText", [])
 
 			if (strings && id in strings) {
 				result = strings[id];
-				console.log(result, data);
 				_.each(data, function(val, id) {
 					result = result.replace(getReg(id), _.escape(val));
 				});
