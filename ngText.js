@@ -1,3 +1,10 @@
+/*
+ * ngText.js 0.1.0 09-5-2013
+ * copyright (c) 2013 Andrew Luetgers
+ * you are free to distribute ngText.js under the MIT license
+ * https://github.com/andrewluetgers/ngText
+ */
+
 
 /**
  * compliment this service with a language pack like so
