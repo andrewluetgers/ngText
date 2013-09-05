@@ -1,16 +1,16 @@
 // uses https://github.com/andrewluetgers/ngTest
-ngTest({"common - uiText: A util for centralizing UI strings": [
-	"uiText:",
-		"uiTextConfig",
+ngTest({"common - ngText: A util for centralizing UI strings": [
+	"ngText:",
+		"ngTextConfig",
 		"$T",
 	{
 
 		"Should default to english language": function() {
-			expect(uiTextConfig.lang).toBe("en");
+			expect(ngTextConfig.lang).toBe("en");
 		},
 
 		"Should not have any pre-loaded strings": function() {
-			expect(uiTextConfig.strings.en).toBe(undefined);
+			expect(ngTextConfig.strings.en).toBe(undefined);
 		},
 
 		"Should load language strings": function() {
@@ -23,7 +23,7 @@ ngTest({"common - uiText: A util for centralizing UI strings": [
 				}
 			};
 			$T.loadTextBundle(bundle);
-			expect(uiTextConfig.strings).toEqual(bundle);
+			expect(ngTextConfig.strings).toEqual(bundle);
 		},
 
 		"Should retrieve an english string by id": function() {
@@ -51,12 +51,12 @@ ngTest({"common - uiText: A util for centralizing UI strings": [
 
 		"Should add new strings to an existing language": function() {
 			$T.loadTextBundle({en: {testHey: "hey"}});
-			expect(uiTextConfig.strings.en.testHey).toBe("hey");
+			expect(ngTextConfig.strings.en.testHey).toBe("hey");
 		},
 
 		"Should override existing strings in an existing language": function() {
 			$T.loadTextBundle({en: {testHi: "hi"}});
-			expect(uiTextConfig.strings.en.testHi).toBe("hi");
+			expect(ngTextConfig.strings.en.testHi).toBe("hi");
 		},
 
 		"Should override existing strings in an existing language and warn by logging when warn is truthy": function() {
@@ -69,7 +69,7 @@ ngTest({"common - uiText: A util for centralizing UI strings": [
 			spyOn(console, 'log');
 
 			$T.loadTextBundle({en: {testHi: "hi1"}}, true);
-			expect(uiTextConfig.strings.en.testHi).toBe("hi1");
+			expect(ngTextConfig.strings.en.testHi).toBe("hi1");
 			expect(console.log).toHaveBeenCalledWith(msg);
 		},
 
@@ -89,7 +89,7 @@ ngTest({"common - uiText: A util for centralizing UI strings": [
 		"Should add a new language": function() {
 			var bundle = {fr: {testHi: "bonjour"}};
 			$T.loadTextBundle(bundle);
-			expect(uiTextConfig.strings.fr).toEqual(bundle.fr);
+			expect(ngTextConfig.strings.fr).toEqual(bundle.fr);
 		},
 
 		"Should override current language": function() {

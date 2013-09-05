@@ -13,9 +13,9 @@
  *	 .value("myTextBundle", {
  *		 en: {
  *			 error:					"There was an error",
- *			 thanks:					"Thanks!",
+ *			 thanks:				"Thanks!",
  *			 networkError:			"Network Error: %status \nThere was an error attempting to " +
- *			 "connect to the server %server \nPlease check your connection and try again.",
+ *			 						"connect to the server %server \nPlease check your connection and try again.",
  *			 accessDenied:			"Access Denied, you must log in to access \n%1",
  *			 loggedOut:				"Successfully logged out."
  *		 },
@@ -41,7 +41,7 @@
 
 angular.module("ngText", [])
 
-	.factory("$T", function(uiTextConfig) {
+	.factory("$T", function(ngTextConfig) {
 
 		var getReg = _.memoize(function(id) {
 			return new RegExp("%"+id, "g");
@@ -58,8 +58,8 @@ angular.module("ngText", [])
 		 * @return (string)
 		 */
 		function $T(id, data, _lang) {
-			var lang = _lang || uiTextConfig.lang,
-				strings = uiTextConfig.strings[lang],
+			var lang = _lang || ngTextConfig.lang,
+				strings = ngTextConfig.strings[lang],
 				result = "";
 
 			if (strings && id in strings) {
@@ -75,8 +75,8 @@ angular.module("ngText", [])
 		}
 
 		$T.setLang = function(lang) {
-			if (lang in uiTextConfig.strings) {
-				uiTextConfig.lang = lang;
+			if (lang in ngTextConfig.strings) {
+				ngTextConfig.lang = lang;
 			} else {
 				throw new Error("No text bundle loaded for "+lang);
 			}
@@ -92,11 +92,11 @@ angular.module("ngText", [])
 		 */
 		$T.loadTextBundle = function(bundle, warn) {
 			_.each(bundle, function(strings, lang) {
-				if (!uiTextConfig.strings[lang]) {
-					uiTextConfig.strings[lang] = strings;
+				if (!ngTextConfig.strings[lang]) {
+					ngTextConfig.strings[lang] = strings;
 				} else {
 					_.each(strings, function(val, key) {
-						var prev = uiTextConfig.strings[lang][key];
+						var prev = ngTextConfig.strings[lang][key];
 						if (warn && prev) {
 							var msg = "$T.loadTextBundle is overwriting " + lang + ":" + key +", '"+prev+"' with '" + val + "'";
 							if (warn == "throw") {
@@ -105,7 +105,7 @@ angular.module("ngText", [])
 								console.log(msg);
 							}
 						}
-						uiTextConfig.strings[lang][key] = val;
+						ngTextConfig.strings[lang][key] = val;
 					});
 				}
 			});
@@ -114,7 +114,7 @@ angular.module("ngText", [])
 		return $T;
 	})
 
-	.value('uiTextConfig', {
+	.value('ngTextConfig', {
 		lang: "en",
 		strings: {}
 	});
