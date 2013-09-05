@@ -10,9 +10,9 @@ angular.module("myTextBundle", ["ngText"])
 	 .value("myTextBundle", {
 		 en: {
 			 error:					"There was an error",
-			 thanks:					"Thanks!",
+			 thanks:				"Thanks!",
 			 networkError:			"Network Error: %status \nThere was an error attempting to " +
-			 "connect to the server %server \nPlease check your connection and try again.",
+			 						"connect to the server %server \nPlease check your connection and try again.",
 			 accessDenied:			"Access Denied, you must log in to access \n%1",
 			 loggedOut:				"Successfully logged out."
 		 },
