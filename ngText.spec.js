@@ -3,6 +3,19 @@ ngTest({"ngText: A service for centralizing UI strings and supporting multiple l
 	"ngText:",
 		"ngTextConfig",
 		"$T",
+
+	// we need to get back to original state even if text modules have been added
+	// so we save the current state, and put it back to original state or our testStrings
+	// then we put the original stuff back so we don't break other tests
+	"origStrings=",
+	"testStrings=",
+	function before() {
+		origStrings = ngTextConfig.strings;
+		ngTextConfig.strings = testStrings || {en:undefined};
+	},
+	function after() {
+		ngTextConfig.strings = origStrings;
+	},
 	{
 
 		"Should default to english language": function() {
@@ -14,7 +27,7 @@ ngTest({"ngText: A service for centralizing UI strings and supporting multiple l
 		},
 
 		"Should load language strings": function() {
-			var bundle = {
+			testStrings = {
 				en: {
 					testHi:					"Hello",
 					testThanks:				"Thanks %0!",
@@ -22,8 +35,8 @@ ngTest({"ngText: A service for centralizing UI strings and supporting multiple l
 											"connect to the server (%url) please check your connection and try again."
 				}
 			};
-			$T.loadTextBundle(bundle);
-			expect(ngTextConfig.strings).toEqual(bundle);
+			$T.loadTextBundle(testStrings);
+			expect(ngTextConfig.strings).toEqual(testStrings);
 		},
 
 		"Should retrieve an english string by id": function() {
@@ -37,6 +50,10 @@ ngTest({"ngText: A service for centralizing UI strings and supporting multiple l
 
 		"Should retrieve an array formatted string with replaced values": function() {
 			expect($T("testThanks", ["foo"])).toEqual("Thanks foo!");
+		},
+
+		"Should retrieve treat rest args as array of values": function() {
+			expect($T("testThanks", "foo")).toEqual("Thanks foo!");
 		},
 
 		"Should retrieve an object formatted string with replaced values": function() {
@@ -93,7 +110,7 @@ ngTest({"ngText: A service for centralizing UI strings and supporting multiple l
 		},
 
 		"Should override current language": function() {
-			expect($T("testHi", null, "fr")).toEqual("bonjour");
+			expect($T.use("fr", "testHi")).toEqual("bonjour");
 		},
 
 		"Should set the current language": function() {

@@ -1,5 +1,5 @@
 /*
- * ngText.js 0.1.0 09-5-2013
+ * ngText.js 0.1.1 10-4-2013
  * copyright (c) 2013 Andrew Luetgers
  * you are free to distribute ngText.js under the MIT license
  * https://github.com/andrewluetgers/ngText
@@ -53,14 +53,14 @@ angular.module("ngText", [])
 		 * @param data (array or object) values to be mapped into
 		 *		the selected ui text where %key or %index corresponds
 		 *		to the value to use from the provided object or array
-		 * @param _lang (string) if provided will override the
-		 *		current language for this call only
 		 * @return (string)
 		 */
-		function $T(id, data, _lang) {
-			var lang = _lang || ngTextConfig.lang,
+		function $T(id, data) {
+			var lang = ngTextConfig.lang,
 				strings = ngTextConfig.strings[lang],
 				result = "";
+
+			data = _.isString(data) ? _.rest(arguments) : data;
 
 			if (strings && id in strings) {
 				result = strings[id];
@@ -79,6 +79,15 @@ angular.module("ngText", [])
 			} else {
 				throw new Error("No text bundle loaded for "+lang);
 			}
+		};
+
+		$T.use = function(lang) {
+			var oldLang = ngTextConfig.lang;
+
+			$T.setLang(lang);
+			var str = $T.apply(null, _.rest(arguments));
+			ngTextConfig.lang = oldLang;
+			return str;
 		};
 
 		/**
